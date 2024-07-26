@@ -1,0 +1,7 @@
+.env*
+.idx
+.vscode
+.wwebjs_auth
+.gitattributes
+package-lock.json
+node_modules

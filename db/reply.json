@@ -1,0 +1,48 @@
+{
+  "prima": {
+    "dataHock": 1,
+    "id": "1000",
+    "class": 0,
+    "resp": "CHAT APAPUN SELAIN COSTUME.",
+    "file": null,
+    "ext": null,
+    "status": "false",
+    "updatedAt": "26-07-2024 03:18"
+  },
+  "4826h": {
+    "id": "20240725104151",
+    "text": "01",
+    "resp": "02",
+    "ext": "",
+    "file": "",
+    "dataHock": 1,
+    "class": 1,
+    "status": "true",
+    "createdAt": "25-07-2024 10:41",
+    "updatedAt": "25-07-2024 14:45"
+  },
+  "52mw5c": {
+    "id": "20240725104156",
+    "text": "02",
+    "resp": "Wellcome",
+    "ext": null,
+    "file": null,
+    "dataHock": 1,
+    "class": 1,
+    "status": "true",
+    "createdAt": "25-07-2024 10:41",
+    "updatedAt": "26-07-2024 09:29"
+  },
+  "nz6vo5": {
+    "id": "2024072630006",
+    "text": "03",
+    "resp": "Hallo !! guys",
+    "ext": "",
+    "file": "",
+    "dataHock": 1,
+    "class": 1,
+    "status": "false",
+    "createdAt": "26-07-2024 03:00",
+    "updatedAt": "26-07-2024 09:28"
+  }
+}

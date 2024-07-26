@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no" />  
+        <link rel="icon" type="image/x-icon" href="{{INC.logoP}}" />
+        <title>{{{Title}}}</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <link rel="stylesheet" type="text/css" href="/scripts/bootstrap_x/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/scripts/easyuimetro/easyui.css">
+        <link rel="stylesheet" href="/fontawesome-free-6.2.1-web/css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="/scripts/easyui-ui-pepper-grinder/easyui.css">
+        <link rel="stylesheet" href="/scripts/toastr/toastr.min.css">
+        <link rel="stylesheet" href="/scripts/lte/adminlte.min.css">
+         <link rel="stylesheet" href="/scripts/overlayScrollbars/OverlayScrollbars.min.css">
+        <script src="/scripts/jquery/jquery.min.js"></script>
+        <script src="/scripts/jquery-ui/jquery-ui.min.js"></script>
+        <script src="/scripts/easyui/jquery.min.js"></script>
+        <script src="/scripts/easyui/jquery.easyui.min.js"></script>
+        <script src="/scripts/easyui/datagrid-filter.js"></script>
+        <script src="/scripts/easyui/datagrid-detailview.js"></script>
+        <script src="/scripts/easyui/datagrid-export.js"></script>
+        <script src="/scripts/h2c/html2canvas.min.js"></script>
+        <style>
+            :root {
+            --pa: {{INC.backroundColor}};
+            --pb: {{INC.textColor}};
+            --pc: {{INC.hoverColor}};
+            --sa: #17a2b8;
+            --sb: #ffffff;
+            --sc: #999000;
+            --wa: #1e1e48;
+            --wb: #ffffff;
+            --wc: #999000;
+            }
+            .card {color: black;}
+            .modal {color: black;}
+            .bg-0 {background-color: var(--pb);color: var(--pa);}
+            .r10 {border-radius:10px;}
+            .r20 {border-radius:20px;}
+            .btr,.btl{top: 8px;position: fixed;z-index: 1000}
+            .btr {right:8px;}
+            .btl {left:8px;}
+            .modal-top {position: fixed;z-index: 3000;}
+            .rol-100 {height: 100px;overflow-y: scroll;}
+            .rol-200 {height: 200px;overflow-y: scroll;}
+            .rol-300 {height: 300px;overflow-y: scroll;}
+            .rol-400 {height: 400px;overflow-y: scroll;}
+            .rol-500 {height: 500px;overflow-y: scroll;}
+            .bg-1 {background-color: var(--pa);color: var(--pb);}
+            .bg-1:hover {background-color: var(--pc);color: var(--pb);}
+            .bt-1 {background-color: var(--pa);color: var(--pb);}
+            .bt-1:hover {background-color: var(--pc);color: var(--pb);}
+        </style>
+    </head>
+    <body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height" oncontectmenu="return false">
+
+        {{{body}}}
+    <script src="/scripts/bootstrap/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+        function baseUrl() {return window.location.origin;}
+        function alr(t, msg) {$.messager.alert(t, msg)}
+        function msg(t, msg) {$.messager.show({title: t,msg: msg});}
+        //-----------------------------------------end
+        //-----------------------------------------start
+        function TrueFalse(val, row) {
+        return (val=='true')?'<i class="fa fa-check-circle  fa-2x text-success" title="YA"></i>':'<i class="fa fa-times-circle fa-2x text-danger" title="TIDAK"></i>';
+        }
+        //-----------------------------------------end
+        //-----------------------------------------start
+        function hid_load(time){
+            if(time==''){
+                $('#load').modal('hide');
+            }else{
+                setTimeout(() => {
+                    $('#load').modal('hide');
+                }, time);
+            }
+        }
+        //-----------------------------------------end
+        //-----------------------------------------start
+        function show_load(){
+            $('#load').modal({backdrop: "static"});
+        }
+        //-----------------------------------------end
+    </script>
+    <!--START Modal 1-->
+    <div class="modal fade" id="load" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <br>
+            <br>
+            <br>
+            <br>
+            <center>
+                <img src="/img/loading2.gif" width="140">
+            </center>
+        </div>
+    </div>
+    <!-- End Modal 1-->
+    </body>
+</html>

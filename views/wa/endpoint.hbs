@@ -1,0 +1,212 @@
+<!-- TOP NAVIGASI START -->
+<div class="btl">
+</div>
+<div class="btr">
+    <a id="b_keluar"></a>
+    <a href="" class="btn-sm bt-1 r20 d-none d-sm-inline-block" title="Reload"><i class="fa-solid fa-sync fa-sm"></i></a>
+</div>
+<!-- TOP NAVIGASI END -->
+<div class="mt-2">
+
+    <center>
+        <a href="" class="text-dark"><i class="fab fa-whatsapp mr-2 mb-3"></i><strong><small>EndPoint</small></strong></a>
+    </center>
+    
+    <div class="m-4">
+
+        <div class="card col table-responsive" style="border-radius: 10px;border-left: 5px solid var(--pa);border-right: 5px solid var(--pa);">
+           <div class="row m-1">
+                <div class="col-md-6 p-2">
+                    <div id="desk"></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="my-2" id="gfo">
+                        <center>
+                            <h3 id="qrcode"></h3>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- Start Modal 1 -->
+<div class="modal fade" id="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="head"></div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="fm" method="post">
+                    <label><small>No. Whatsapp</small></label>
+                    <input type="text" class="form-control" id="hp" name="hp">
+                    <label><small>Pesan Text</small></label>
+                    <textarea name="text" id="text" class="form-control" cols="30" rows="3"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0)" onclick="send()" class="btn-sm btn-dark" title="Kirim"><i class="fa fa-paper-plane mr-2"></i>Kirim</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal 1-->
+<script src="/scripts/js_me/qr-code-styling.js"></script>
+<script src="/scripts/js_me/show_qr.js"></script>
+<script type="text/javascript">
+get_sta();
+setInterval(get_sta, 3000);
+function get_sta() {
+    $.ajax({
+        url: "/whatsapp/status",
+        type: "POST",
+        dataType: "JSON",
+        cache: false,
+        data: {},
+        success:function(r){
+            if(r.status=='READY'){
+                var number = r.clientNumber.replace("62","0");
+                $("#b_keluar").html(`
+                <a href="javascript:void(0);" onclick="kirim();" class="btn-sm bg-1 r20" title="Tes Kirim"><i class="far fa-paper-plane fa-sm"></i></a>
+                <a href="javascript:void(0);" onclick="keluar();" class="btn-sm bg-1 r20" title="Keluar"><i class="fa fa-power-off fa-sm"></i></a>
+                `);
+                $("#desk").html('');
+                $("#desk").html(`
+                <h5 class="text-success">WhatsApp Connected.</h5>
+                <i class="far fa-user mr-2"></i>`+r.clientName+`<br>
+                <i class="fa fa-mobile-alt mr-2"></i>`+number+`<br>
+                `);
+                $("#qrcode").empty();
+                $("#qrcode").html(`<img src="img/wa.gif" width="50%">`);
+            }else{
+                get_qr();
+            }
+        },
+        error:function(e){
+            $("#b_keluar").html('');
+            $("#qrcode").empty();
+            $("#qrcode").html(`<img src="img/dis.png" width="50%">`);
+            $("#desk").html('');
+            $("#desk").html(`<strong class="text-danger">Server Disconnected.</strong class=>`); 
+        }
+    });
+
+}
+function get_qr() {
+    $.ajax({
+        url: "/whatsapp/qr",
+        type: "POST",
+        dataType: "JSON",
+        cache: false,
+        data: {},
+        success:function(r){
+            if (r) {
+                    $("#b_keluar").html('');
+                    $("#qrcode").empty();
+                    $("#desk").html('');
+                    $("#desk").html(`
+                    <h5>Use WhatsApp on your computer</h5>
+                    <br>
+                     1. Open WhatsApp on your phone <br>
+                     2. Tap <strong>Menu</strong><i class="fa fa-ellipsis-v fa-border mx-2"></i>Or <strong>Setting</strong><i class="fab fa-whmcs fa-border mx-2"></i>and select <strong>Linked Devices</strong><br>
+                     3. Tap on <strong>Link a device</strong><br>
+                     4. Point your phone to this screen to capture the QR code.
+                    `);
+                    if(r.qr==null){
+                        $("#qrcode").html(`<img src="img/loading1.gif" width="50%">`);
+                    }else{
+                        var data = r.qr;
+                        var logo = "img/wa_n.png";
+                        var color = "#000";
+                        qrcode("qrcode", data, logo, color);
+                    }
+            }else{
+                $("#b_keluar").html('');
+                $("#qrcode").empty();
+                $("#qrcode").html(`<img src="img/dis.png" width="50%">`);
+                $("#desk").html('');
+                $("#desk").html(`<strong class="text-danger">Server Disconnected.</strong class=>`); 
+            }
+        },
+        error:function(e){
+            $("#qrcode").empty();
+            $("#qrcode").html(`<img src="img/dev/dis.png" width="50%">`);
+            $("#desk").html('');
+            $("#desk").html(`<strong class="text-danger">Server Disconnected.</strong class=>`); 
+        }
+    });
+}
+function kirim(){
+    $('#head').html(`<i class="far fa-paper-plane mr-2"></i> Tes Kirim`);
+    $("#modal").modal('show');
+    $("#hp").val('');
+    $("#hp").focus();
+    $("#text").val('');
+}
+//==========================================================
+function send() {
+    if($("#hp").val()==''){
+      msg('Error','No Whatsapp harus di isi.');
+      $("#hp").focus();
+      return;
+    }
+    if($("#text").val()==''){
+      msg('Error','Pesan text harus di isi.');
+      $("#text").focus();
+      return;
+    }
+    $.ajax({
+        url: "/whatsapp/send",
+        type: "POST",
+        dataType: "JSON",
+        cache: false,
+        data: {
+            "number":$("#hp").val(),
+            "text":$("#text").val()
+        },
+        success:function(res){
+            if (res.success) {
+                msg('Success','Berhasil di kirim');
+                $("#modal").modal('hide');
+            }else{
+                msg('Error',errorMsg);
+            }
+        },
+        error:function(e){
+            console.log(e);
+            msg('Error','Server Not response')
+        }
+    });
+}
+//==========================================================
+//==========================================================
+function keluar() {
+    $.messager.confirm('Attention!', '<strong class="text-danger">Hati-hati Melakukan aksi ini,</strong><br> Apakah Anda Yakin Ingin Keluar ?', function(r) {
+        if (r) {
+            $.ajax({
+                url: "/whatsapp/logout",
+                type: "POST",
+                dataType: "JSON",
+                cache: false,
+                data: {},
+                success:function(res){
+                   msg('Success','Logout Success')
+                },
+                error:function(e){
+                    msg('Error','Server Not response')
+                }
+            });
+        }
+    });
+}
+//==========================================================
+$('#hp').on('keypress', function(event) {
+    return (((event.which > 47) && (event.which < 58)) || (event.which == 13));
+});
+</script>

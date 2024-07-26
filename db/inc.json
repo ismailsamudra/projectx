@@ -1,0 +1,34 @@
+{
+  "7pss1": {
+    "id": "dataApp",
+    "appName": "Expert-Wabot",
+    "instansiName": "Expert-App-Corp",
+    "loginWave": "/img/1721826896360-812524533.png",
+    "logoP": "/img/1721892271522-190390854.png",
+    "logoN": null,
+    "logoP_info": {
+      "fieldname": "file",
+      "originalname": "expert.png",
+      "encoding": "7bit",
+      "mimetype": "image/png",
+      "destination": "assets/img/",
+      "filename": "1721892271522-190390854.png",
+      "path": "assets\\img\\1721892271522-190390854.png",
+      "size": 54198
+    },
+    "loginWave_info": {
+      "fieldname": "file",
+      "originalname": "wave.png",
+      "encoding": "7bit",
+      "mimetype": "image/png",
+      "destination": "assets/img/",
+      "filename": "1721826896360-812524533.png",
+      "path": "assets\\img\\1721826896360-812524533.png",
+      "size": 81524
+    },
+    "backroundColor": "#08775b",
+    "textColor": "#ffffff",
+    "hoverColor": "#091b16",
+    "opsiReply": "GOOGLE-AI"
+  }
+}

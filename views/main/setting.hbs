@@ -1,0 +1,354 @@
+<style>.image_upload>input {display: none;}</style>
+<div class="btl">
+
+</div>
+<div class="btr">
+    <a href="" class="btn-sm bt-1 r20" title="Reload"><i class="fa-solid fa-sync fa-sm"></i></a>
+</div>
+
+<div class="container mt-2">
+    <center>
+        <a href="" class="text-dark"><i class="fa fa-cog fa-spin mr-2 mb-3"></i><strong><small>{{ Title }}</small></strong></a>
+    </center>
+
+    <div class="row">
+        <div class="col-md-12 mb-2">
+            <div class="card bg-1">
+                <div class="col">
+                    <small>
+                        <strong>
+                            NB : KLICK LOGO UNTUK MENGGANTI.
+                            <div class="small">&nbsp;&nbsp;Extension : 'png','jpg'</div>
+                        </strong>
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="col">
+                            <small>
+                                <strong>
+                                    Logo Aplikasi
+                                </strong>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-6">
+                    <center>
+                        <span class="image_upload">
+                            <label for="btn_logo_p">
+                                <a class="btn" rel="nofollow" id="btn_img">
+                                    <div id="logo_p">
+                                        <img src="{{INC.logoP}}" width="100%">
+                                    </div>
+                                </a>
+                            </label>
+                            <input type="file" name="btn_logo_p" id="btn_logo_p">
+                        </span>
+                    </center>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-10">
+
+            <div class="row mb-2">
+                <div class="col-md-4">
+                    <div class="card col table-responsive">
+                        App Name
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card col table-responsive">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div id="appName_lb"><strong>{{INC.appName}}</strong></div>
+                                <input type="text" id="appName" style="height: 23px;" value="{{INC.appName}}" class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <x>
+                                    <a href="javascript:void(0);" id="bt_e_appName" class="float-right" onclick="pass_e('appName')"><i class="fa fa-edit text-success" title="Edit"></i></a>
+                                    <a href="javascript:void(0);" id="bt_s_appName" class="float-right" onclick="save('appName')"><i class="fa fa-save" title="Save"></i></a>
+                                </x>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+
+            <div class="row mb-2">
+                <div class="col-md-4">
+                    <div class="card col table-responsive">
+                        Instansi Name
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card col table-responsive">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div id="instansiName_lb"><strong>{{INC.instansiName}}</strong></div>
+                                <input type="text" id="instansiName" style="height: 23px;" value="{{INC.instansiName}}" class="form-control">
+                            </div>
+                            <div class="col-md-2">
+                                <x>
+                                    <a href="javascript:void(0);" id="bt_e_instansiName" class="float-right" onclick="pass_e('instansiName')"><i class="fa fa-edit text-success" title="Edit"></i></a>
+                                    <a href="javascript:void(0);" id="bt_s_instansiName" class="float-right" onclick="save('instansiName')"><i class="fa fa-save" title="Save"></i></a>
+                                </x>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+
+            <div class="row mb-2">
+                <div class="col-md-4">
+                    <div class="card col table-responsive">
+                        <x>
+                            Login Backround
+                            <a href="javascript:voit(0);" class="float-right image_upload" title="Ganti">
+                                <label for="btn_img_wave">
+                                    <i class="fa fa-upload text-primary"></i>
+                                </label>
+                                <input type="file" name="btn_img_wave" id="btn_img_wave">
+                            </a>
+                        </x>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card col table-responsive p-2">
+                        <center>
+                            <div id="wave_l">
+                                <img src="{{INC.loginWave}}" alt="wave" width="30%">
+                            </div>
+                        </center>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-12 mb-2">
+            <div class="card bg-1">
+                <div class="col">OPSI WABOT</div>
+            </div>
+        </div>
+
+            <div class="row mb-2">
+                <div class="col-md-4">
+                    <div class="card col table-responsive">
+                        Auto Reply
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card col table-responsive">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div id="opsiReply_lb"><strong>{{INC.opsiReply}}</strong></div>
+                                <select id="opsiReply" style="height: 30px;font-size:small;" class="form-control mb-2">
+                                    <option value="MANUAL">MANUAL</option>
+                                    <option value="GOOGLE-AI">GOOGLE-AI</option>
+                                    <option value="DISABLE">DISABLE</option>
+                                </select>
+                                {{!-- <input type="text" id="opsiReply" style="height: 23px;" value="{{INC.opsiReply}}" class="form-control"> --}}
+                            </div>
+                            <div class="col-md-2">
+                                <x>
+                                    <a href="javascript:void(0);" id="bt_e_opsiReply" class="float-right" onclick="pass_e('opsiReply')"><i class="fa fa-edit text-success" title="Edit"></i></a>
+                                    <a href="javascript:void(0);" id="bt_s_opsiReply" class="float-right" onclick="save('opsiReply')"><i class="fa fa-save" title="Save"></i></a>
+                                </x>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+
+        <div class="col-md-12 mb-2">
+            <div class="card bg-1">
+                <div class="col">AKTIVE COLOR</div>
+            </div>
+        </div>
+
+            <div class="row mb-2">
+                <div class="col-md-4 mb-1">
+                    <div class="card col table-responsive">
+                        Backround Color
+                        <input type="color" id="backroundColor" style="height: 30px;" value="{{INC.backroundColor}}" onchange="cColor('backroundColor')" class="form-control my-1">
+                         <center><strong><p id="backroundColor_lb">{{INC.backroundColor}}</p></strong></center>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-1">
+                    <div class="card col table-responsive">
+                        Text Color
+                        <input type="color" id="textColor" style="height: 30px;" value="{{INC.textColor}}" onchange="cColor('textColor')" class="form-control my-1">
+                        <center><strong><p id="textColor_lb">{{INC.textColor}}</p></strong></center>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-1">
+                    <div class="card col table-responsive">
+                        Hover Color
+                        <input type="color" id="hoverColor" style="height: 30px;" value="{{INC.hoverColor}}" onchange="cColor('hoverColor')" class="form-control my-1">
+                        <center><strong><p id="hoverColor_lb">{{INC.hoverColor}}</p></strong></center>
+                    </div>
+                </div>
+            </div>  
+        
+        <div class="col-md-12 mb-2">
+            <div class="card bg-1">
+                <div class="col">&nbsp;</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    $('#appName_lb').show();
+    $('#appName').hide();
+    $('#bt_s_appName').hide();
+    $('#bt_e_appName').show();
+    $('#instansiName_lb').show();
+    $('#instansiName').hide();
+    $('#bt_s_instansiName').hide();
+    $('#bt_e_instansiName').show();
+    $('#opsiReply_lb').show();
+    $('#opsiReply').hide();
+    $('#bt_s_opsiReply').hide();
+    $('#bt_e_opsiReply').show();
+    //===========================================
+    function pass_e(id) {
+        $('#bt_e_' + id).hide();
+        $('#bt_s_' + id).show();
+        $('#' + id + '_lb').hide();
+        $('#' + id).show();
+        $('#' + id).focus();
+    }
+    //===========================================
+    //===========================================
+        function pass_x(id) {
+        $('#' + id).hide();
+        $('#' + id + '_lb').show();
+        $('#bt_s_' + id).hide();
+        $('#bt_e_' + id).show();
+    }
+    //===========================================
+    //===========================================
+    function cColor(id) {
+        var col = 'dataApp';
+        var val = document.getElementById(id).value;
+        $.post("/setting/updateinc",{id,val,col},function(r){
+            if (r.success){
+                msg('Success','Berhasil di save.');
+                $("#"+id+"_lb").html(val);
+            }else{
+                toastr.error(r.errorMsg);
+            }
+        },'json');
+    }
+    //===========================================
+    //===========================================
+    function save(id) {
+        var val = document.getElementById(id).value;
+        var col = 'dataApp';
+        $.ajax({
+            url: "/setting/updateinc",
+            type: "POST",
+            dataType: "JSON",
+            cache: false,
+            data: {
+               id,val,col
+            },
+            success:function(r){
+                if (r.success) {
+                    document.getElementById(id + '_lb').innerHTML = '<strong>'+val+'</strong>' ;
+                    $.messager.show({
+                        title: 'Success !',
+                        msg: 'Berhasil Di Save'
+                    });
+                    pass_x(id);
+                }else{
+                    pass_x(id);
+                    $.messager.show({
+                        title: 'Error !',
+                        msg: r.errorMsg
+                    });
+                }
+            }
+        });
+    }
+    //===========================================
+    //===========================================
+    $(document).ready(function() {
+        $('#btn_logo_p').on('change', function() {
+            var id = 'logoP';
+            var url = '/img-to-inc';
+            var property = document.getElementById('btn_logo_p').files[0];
+            var image_name = property.name;
+            var image_extension = image_name.split('.').pop().toLowerCase();
+            var e = image_extension;
+            if (e !== 'png' && e && e !== 'jpg') {
+                msg('Error','Logo Extensi Harus [ png , jpg].');
+                return;
+            }
+            var form_data = new FormData();
+            form_data.append("file", property);
+            form_data.append("col", "dataApp");
+            form_data.append("id", "logoP");
+
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    if(data.errorMsg){
+                        msg('Error',data.errorMsg);
+                    }else{                        
+                        msg('Success','Logo Berhasil Di Ganti.');
+                        $('#logo_p').html('<img src="'+data+'" width="100%">');
+                    }
+                }
+            });
+        });
+        $('#btn_img_wave').on('change', function() {
+            var id = 'loginWave';
+            var url = '/img-to-inc';
+            var property = document.getElementById('btn_img_wave').files[0];
+            var image_name = property.name;
+            var image_extension = image_name.split('.').pop().toLowerCase();
+            var e = image_extension;
+            if (e !== 'png' && e !== 'gif' && e !== 'jpg' && e !== 'jpeg') {
+                msg('Error','Logo Extensi Harus [ png , gif, jpg, jpeg]');
+                return;
+            }
+            var form_data = new FormData();
+            form_data.append("file", property);
+            form_data.append("col", "dataApp");
+            form_data.append("id", id);
+
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data) {
+                    if(data.errorMsg){
+                        msg('Error',data.errorMsg);
+                    }else{
+                        msg('Success','img backround Berhasil Di Ganti');
+                        $('#wave_l').html('<img src="'+data+'" alt="wave" width="30%">');
+                    }
+                }
+            });
+        });
+    });
+    //===========================================
+</script>

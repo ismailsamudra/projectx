@@ -1,0 +1,611 @@
+<!-- TOP NAVIGASI START -->
+<div class="btl">
+</div>
+<div class="btr">
+     <a href="javascript:void(0);" onclick="broadcast();" class="btn-sm bg-1 r20" title="ADD"><i class="far fa-envelope"></i><span class="d-none d-sm-inline-block ml-1">BROADCAST</span></a>
+   <a href="javascript:void(0);" onclick="$(`#dguser`).datagrid(`reload`);$(`#dguser2`).datagrid(`reload`);" class="btn-sm bt-1 r20" title="Reload"><i class="fa-solid fa-sync fa-sm"></i></a>
+</div>
+<!-- TOP NAVIGASI END -->
+
+<div class="m-4">
+    <div class="m-1">
+
+        <div class="mb-2">
+            <div class="card" style="border-radius: 10px;border-left: 5px solid var(--pa);border-right: 5px solid var(--pa);">
+                <div class="col">
+                    <a href="" class="text-dark"><i class="fab fa-whatsapp fa-flip mr-2"></i><strong>WHATSAPP BROADCAST</strong></a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-8 mb-2">
+                <center>
+                    <table id="dguser" toolbar="#toolbarCustomer" class="easyui-datagrid" singleSelect="true" style="width: 100%;height:356px" fitColumns="true" rowNumbers="true" pagination="true" url="/broadcast/getdata" pageSize="10" pageList="[10,25,50,75,100,125,150,200]">
+                        <thead>
+                            <tr>
+                                <th field="id" width="100%" formatter="show_res" sortable="true">DATA USER</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </center>
+            </div>
+            <div class="col-md-4 mb-2">
+                <center>
+                    <table id="dguser2" toolbar="#toolbarCustomer1" class="easyui-datagrid" singleSelect="true" style="width: 100%;height:356px" fitColumns="true" rowNumbers="true" pagination="false" url="/broadcast/getlog" pageSize="10" pageList="[10,25,50,75,100,125,150,200]">
+                        <thead>
+                            <tr>
+                                <th field="tgl" width="100%" sortable="true">LOG AKTIVITAS</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </center>
+            </div>
+
+        </div>
+    </div>
+ </div>   
+<div id="toolbarCustomer">
+    <div class="row p-1">
+        <div class="col-md-6">
+           <a href="javascript:void(0);" onclick="add();" class="btn-sm bg-1 r20 float-left" title="ADD"><i class="fa fa-user-plus"></i> </a>
+           <a href="javascript:void(0);" onclick="$('#m_excel').modal('show');" class="btn-sm bg-1 r20 float-left ml-1" title="IMPORT EXEL"><i class="fa fa-file-excel"></i> </a>
+           <a href="javascript:void(0);" onclick="truncateuser();" class="btn-sm bg-1 r20 float-left ml-1" title="Bersihkan"><i class="far fa-trash-alt"></i></a>
+           <a href="javascript:void(0);"
+            onclick="$.messager.alert('INFO !',`
+                 Klick kanang jika desktop sentuh tahan jika Mobile pada baris data Untuk menu lain.<br>
+                <hr>
+                 Dobel Klick baris data untuk Edit.
+                 <hr>
+                 Modul ini hanya bisa terpakai jika whatsapp sudah terhubung pada menu endpoint.
+                 <hr>
+                 pastikan anda sudah membuat template text pada menu template yang nantinya akan di panggil oleh modul ini sebagai text pesan yang di kirim.
+                `);" 
+           class="btn-sm bg-1 r20 float-left ml-1" title="Info"><i class="fa fa-info mx-1"></i>
+        </a>
+        </div>
+        <div class="col-md-6">
+            <!---------SEARCH BOX START--------->
+            <input id="searchCustomer" class="easyui-searchbox" data-options="prompt:'Cari Nama / No.hp..',searcher:doSearchCustomer,
+            inputEvents: $.extend({}, $.fn.searchbox.defaults.inputEvents, {
+                keyup: function(e){
+                    var t = $(e.data.target);
+                    var opts = t.searchbox('options');
+                    t.searchbox('setValue', $(this).val());
+                    opts.searcher.call(t[0],t.searchbox('getValue'),t.searchbox('getName'));
+                }
+            })
+        " style="width:100%;"></input>
+            <!---------SEARCH BOX END----------->
+        </div>
+    </div>
+</div>
+<div id="toolbarCustomer1">
+    <div class="row p-1">
+        <div class="col-md-12">
+           <a href="javascript:void(0);" onclick="truncate();" class="btn-sm bg-1 r20 float-left" title="Bersihkan"><i class="far fa-trash-alt"></i></a>
+           <a href="javascript:void(0);"
+            onclick="$.messager.alert('INFO !',`
+                 Klick kanang jika desktop sentuh tahan jika Mobile pada baris data Untuk menu lain.<br>
+                <hr>
+                 Dobel Klick baris data untuk melihat log.
+                `);" 
+           class="btn-sm bg-1 r20 float-left ml-1" title="Info"><i class="fa fa-info mx-1"></i>
+           </a>
+        </div>
+    </div>
+</div>
+<!-- KLICK KANAN START -->
+<div id="mm" class="easyui-menu">
+    <a href="javascript:void(0)" class="btn-sm form-control mb-1" plain="true" onClick="edit();"><i class="fa fa-edit mr-2"></i>Edit</a>
+    <a href="javascript:void(0)" class="btn-sm form-control" plain="true" onClick="destroyuser();"><i class="fa fa-trash mr-2 text-danger"></i> Hapus</a>
+</div>
+<!-- KLICK KANAN END -->
+<!-- KLICK KANAN START -->
+<div id="mm2" class="easyui-menu">
+    <a href="javascript:void(0)" class="btn-sm form-control mb-1" plain="true" onClick="lihat();"><i class="fa fa-eye mr-2"></i>Lihat</a>
+    <a href="javascript:void(0)" class="btn-sm form-control" plain="true" onClick="hapuslog();"><i class="fa fa-trash mr-2 text-danger"></i> Hapus</a>
+</div>
+<!-- KLICK KANAN END -->
+<!-- Start Modal 1 -->
+<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="head"></div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="fm" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" id="id">
+                    <small><strong>Nama</strong></small>
+                    <input type="text" name="nama" id="nama" class="form-control">
+                    <small><strong>No.Whatsapp</strong></small>
+                    <input type="text" name="hp" id="hp" class="form-control">
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" onclick="saver();" class="btn btn-outline-dark btn-sm"><i class="fa fa-save mr-2"></i>Save</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End Modal 1-->
+<!-- Start Modal 1 -->
+<div class="modal fade" id="log" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="head1"></div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea id="logtext" style="width: 100%;height:300px;" readonly class="p-2"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal 1-->
+<!-- Start Modal 1 -->
+<div class="modal fade" id="broad" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="far fa-envelope mr-2"></i>BROADCAST</h5>
+                <button type="button" id="mclose" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="menu1">
+                    <small><strong>NB :</strong>
+                        <br>* Pastikan table user sudah terisi dengan benar,
+                        <br>* jika di start akan dikirim ke 1 user dengan skala detik pada inputan di bawah ini ,
+                        <br> guna menghindari pembekuan akun whatsapp.
+                        <br>* jika pesan terkirim maka user secara automatis akan terhapus dari table,
+                        <br>dan di konversi menjadi log aktivitas.
+                        <br>* <strong class="text-danger">jangan menutup Halaman ini Jika Proses berjalan ,
+                            <br> harap menunggu sampai selesai.</strong> 
+                    </small><br>
+                    <small><strong>Masukkan Skala Detik</strong></small>
+                    <div class="input-group mb-2">
+                        <input type="number" class="form-control" id="second" placeholder="Second" value="10">
+                        <span class="input-group-text btn-dark">DETIK / USER</span>
+                    </div>
+                    <small><strong>Pilih Template Pesan</strong></small>
+                     {{#each TEMP}}
+                      <input type="hidden" id="a{{this.id}}" value="{{this.judul}}">
+                     {{/each}}
+                    <select name="temp" id="temp" class="form-control">
+                        {{#each TEMP}}
+                            <option value="{{this.id}}">{{this.judul}}</option>
+                        {{/each}}
+                    </select>
+
+                </div>
+                <div id="menu2">
+                   <div class="row">
+
+                    <div class="col-md-12 mb-4 mt-2">
+                        <center>
+                            <span id="gambar"></span>
+                        </center>
+                    </div>
+  
+                      <div class="col-md-4 mb-2">
+                        <div class="card" style="border-radius: 10px;border-left: 5px solid blue;border-right: 5px solid blue;">
+                            <center>
+                                <input type="hidden" id="valtimer" value="0">
+                              <strong class="text-primary">TIMER</strong><br>
+                              <h1 id="lbtimer">0</h1>
+                            </center>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-2">
+                        <div class="card" style="border-radius: 10px;border-left: 5px solid green;border-right: 5px solid green;">
+                            <center>
+                                <input type="hidden" id="valterkirim" value="0">
+                              <strong class="text-success">TERKIRIM</strong><br>
+                              <h1 id="lbterkirim">0</h1>
+                            </center>
+                        </div>
+                      </div>
+                      <div class="col-md-4 mb-2">
+                        <div class="card" style="border-radius: 10px;border-left: 5px solid black;border-right: 5px solid black;">
+                            <center>
+                                <input type="hidden" id="valsisa" value="0">
+                               <strong class="text-dark">TERSISA</strong><br>
+                                <h1 id="lbsisa">0</h1>
+                            </center>
+                        </div>
+                      </div>
+
+                      <div class="col-md-12 mt-4">
+                          <div class="card" style="border-radius: 10px;border-left: 5px solid dev(--pa);border-right: 5px solid dev(--pa);">
+                            <div class="col">
+                                Template Pesan : <strong id="lbtemp"></strong>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-md-12">
+                            <small>* <strong class="text-danger">Proses sedang berjalan harap jangan menutup Halaman ini.</strong></small> 
+                        </div>
+
+                   </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" onclick="stopbc();" id="btstop" class="btn btn-outline-danger btn-sm"><i class="fa fa-stop mr-2"></i>STOP</a>
+                <a href="javascript:void(0);" onclick="startbc();" id="btstart" class="btn btn-outline-success btn-sm"><i class="fa fa-play mr-2"></i>START</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal 1-->
+<!-- Start Modal 1 -->
+<div class="modal fade" id="m_excel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-file-excel text-success mr-2"></i>Import Excel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="fm2" method="post" enctype="multipart/form-data">
+                <input type="file" id="file" name="file" accept=".xlsx" class="form-control">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);"
+                onclick="$.messager.alert('INFO !',`
+                    extensi only xlsx <br>
+                    Import only Sheet1 <br>
+                     Dont Rename Sheet1 <br>
+                    Data Format in Excel <br>
+                    <img src='data:image/png;base64,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' width='100%'>
+                    `);" 
+            class="btn-sm btn-info" title="Info"><i class="fa fa-info mr-1"></i>Info
+            </a>
+                <a href="javascript:void(0);" onclick="i_excel();" class="btn btn-outline-dark btn-sm"><i class="fa fa-sync mr-2"></i>Import</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End Modal 1-->
+<input type="hidden" id="sesi">
+<script type="text/javascript">
+//===========================================
+function broadcast(){
+    $('#menu1').show();
+    $('#menu2').hide();
+    $('#btstop').hide();
+    $('#btstart').show();
+    $('#broad').modal({backdrop: "static"});
+}
+let myInterval;
+function startbc(){
+    $.post('/broadcast/row',{},function(r){
+        if(r.errorMsg){
+            msg('Error',r.errorMsg);
+            return;
+        }
+        if(r.row>0){
+            $('#menu1').hide();
+            $('#menu2').show();
+            $('#btstop').show();
+            $('#btstart').hide();
+            $('#mclose').hide();
+            $('#lbtimer').html($('#second').val());
+            $('#valtimer').val($('#second').val());
+            $('#lbtemp').html($('#a'+$('#temp').val()).val());
+            $('#valsisa').val(r.row);
+            $('#lbsisa').html(r.row);
+            $('#valterkirim').val(0);
+            $('#lbterkirim').html(0);
+            $('#gambar').html('<img src="/img/send.gif" width="160">');
+            myInterval = setInterval(() => {
+                startTimer(r.log);
+            }, 1000);
+        }else{
+            msg('Error','User Blum ada.');
+        }
+    },'json');
+}
+function startTimer(log){
+    let valt = $('#valtimer').val();
+    rval = valt -1;
+    if(rval<0){
+        $('#lbtimer').html($('#second').val());
+        $('#valtimer').val($('#second').val());
+        $.post('/broadcast/send/'+$('#temp').val(),{log},function(r){
+            if(r.success){
+                let tr = $('#valterkirim').val();
+                ter = parseInt(tr) + 1;
+                $('#valterkirim').val(ter);
+                $('#lbterkirim').html(ter);
+                let si = $('#valsisa').val();
+                sis = parseInt(si) - 1;
+                $('#valsisa').val(sis);
+                $('#lbsisa').html(sis);
+                if(parseInt($('#valsisa').val())<1){
+                stopbc();
+                }
+                $(`#dguser`).datagrid(`reload`);
+                $(`#dguser2`).datagrid(`reload`);
+            }
+        },'json');
+
+    }else{
+        $('#valtimer').val(rval);
+        $('#lbtimer').html(rval);
+    }
+}
+function stopbc(){
+    $('#btstop').hide();
+    $('#btstart').show();
+    $('#lbtimer').html(0);
+    $('#valtimer').val(0);
+    $('#mclose').show();
+    $('#gambar').html('<i class="fa fa-flag fa-3x fa-beat text-success mr-2"></i><h5>SELESAI</h5>');
+    clearInterval(myInterval);
+}
+//===========================================
+//===========================================
+function infoExt(){
+    $.messager.alert('INFO !',`
+        Extensi di izinkan :<br>
+        png , jpg , jpeg , pdf
+    `);
+}
+//===========================================
+//===========================================
+function saver() {
+    var id = document.getElementById("id").value;
+    var nama = document.getElementById("nama").value;
+    if (nama == '') {
+        msg('Error','nama Belum Di isi.');
+        $('#nama').focus();
+        exit;
+    }
+    var hp = document.getElementById("hp").value;
+    if (hp == '') {
+        msg('Error','No.Hp harus Di isi.');
+        $('#hp').focus();
+        exit;
+    }
+    $.post("/broadcast/crud", {id,nama,hp} ,function(r) {
+        if (r.success) {
+                $('#edit').modal('hide');
+                $('#dguser').datagrid('reload');
+                msg('Success !', 'Berhasil di Save');
+        } else {
+            msg('Error', r.errorMsg);
+        }
+    }, 'json');
+}
+//===========================================
+//-----------------------------------------start
+function add() {
+    $('#fm').form('clear');
+    document.getElementById("head").innerHTML = '<h5 class="modal-title"><i class="fa fa-plus mr-2"></i>Tambah Data</h5>';
+    document.getElementById("id").value = 'insert';
+    $('#edit').modal('show');
+
+}
+//-----------------------------------------end
+//-----------------------------------------start
+function edit() {
+    var row = $('#dguser').datagrid('getSelected');
+    if (row) {
+        $('#fm').form('load', row);
+        document.getElementById("head").innerHTML = '<h5 class="modal-title"><i class="fa fa-edit mr-2"></i>Edit Data</h5>';
+        $('#edit').modal('show');
+    }
+}
+//-----------------------------------------end
+//-----------------------------------------start
+function lihat() {
+    var row = $('#dguser2').datagrid('getSelected');
+    if (row) {
+        document.getElementById("logtext").value = row.text;
+        document.getElementById("head1").innerHTML = '<h5 class="modal-title"><i class="far fa-file-alt mr-2"></i>Log Aktifitas</h5>';
+        $('#log').modal('show');
+    }
+}
+//-----------------------------------------end
+//-----------------------------------------start
+function show_res(val, row) {
+    for (var name in row) {
+    return t = `<div class="card col table-responsive my-1 py-1"style="border-radius: 10px;border-left: 5px solid dev(--pa);border-right: 5px solid dev(--pa);">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong> ` + row.hp + ` / ` + row.nama + `</strong>  
+                        </div>
+                    </div>
+                </div>`;
+    }
+}
+//-----------------------------------------end
+//-----------------------------------------start
+function doSearchCustomer() {
+    $('#dguser').datagrid('load', {
+        search_customer: $('#searchCustomer').val()
+    });
+}
+//-----------------------------------------end
+//-----------------------------------------start
+$(function() {
+    $('#dguser').datagrid({
+        singleSelect: true,
+        onRowContextMenu: function(e, index, row) {
+            if (row.file == '' || row.file == null){
+                $('#bthps').html('')
+            }else{
+                $('#bthps').html(`<a href="javascript:void(0)" class="btn-sm form-control mb-1" plain="true" onClick="hpsfile();"><i class="fa fa-times mr-2 text-danger"></i> Hapus File</a>`);
+            }
+            $(this).datagrid('selectRow', index);
+            e.preventDefault();
+            $('#mm').menu('show', {
+                left: e.pageX,
+                top: e.pageY
+            });
+        },
+        onDblClickRow: function() {
+            edit();
+        },
+        rowStyler: function(index, row) {
+            // if (row.status == 'false') {
+            //     return 'font-weight:bold;background-color: #e60e11;color:#000;';
+            // }
+        }
+    })
+
+})
+//-----------------------------------------end
+//-----------------------------------------start
+$(function() {
+    $('#dguser2').datagrid({
+        singleSelect: true,
+        onRowContextMenu: function(e, index, row) {
+            $(this).datagrid('selectRow', index);
+            e.preventDefault();
+            $('#mm2').menu('show', {
+                left: e.pageX,
+                top: e.pageY
+            });
+        },
+        onDblClickRow: function() {
+            lihat();
+        },
+        rowStyler: function(index, row) {
+            // if (row.status == 'false') {
+            //     return 'font-weight:bold;background-color: #e60e11;color:#000;';
+            // }
+        }
+    })
+
+})
+//-----------------------------------------end
+//-----------------------------------------start
+function destroyuser() {
+    var row = $('#dguser').datagrid('getSelected');
+    if (row) {
+        $.messager.confirm('Attention!', '<strong class="text-danger">Hati-hati Melakukan aksi ini,</strong><br> Apakah Anda Yakin Ingin Menghapus data ini ?<br>Nama : ' + row.nama, function(r) {
+            if (r) {
+                $.post("/broadcast/delete", {id:row.id}, function(result) {
+                    if (result.success) {
+                        $('#dguser').datagrid('reload');
+                        msg('Success !', 'Berhasil Di Hapus');
+                    } else {
+                        msg('Error', result.errorMsg);
+                    }
+                }, 'json');
+            }
+        });
+    }
+}
+//-----------------------------------------end
+//-----------------------------------------start
+function hapuslog() {
+    var row = $('#dguser2').datagrid('getSelected');
+    if (row) {
+        $.messager.confirm('Attention!', '<strong class="text-danger">Hati-hati Melakukan aksi ini,</strong><br> Apakah Anda Yakin Ingin Menghapus log ini ?', function(r) {
+            if (r) {
+                $.post("/broadcast/deletelog", {id:row.id}, function(result) {
+                    if (result.success) {
+                        $('#dguser').datagrid('reload');
+                        $('#dguser2').datagrid('reload');
+                        msg('Success !', 'Log Berhasil Di Hapus');
+                    } else {
+                        msg('Error', result.errorMsg);
+                    }
+                }, 'json');
+            }
+        });
+    }
+}
+//-----------------------------------------end
+//-----------------------------------------start
+function truncate() {
+    $.messager.confirm('Attention!', '<strong class="text-danger">Hati-hati Melakukan aksi ini,</strong><br> Apakah Anda Yakin Ingin Mengosongkan log ?', function(r) {
+        if (r) {
+            $.post("/broadcast/truncatelog", {}, function(result) {
+                if (result.success) {
+                    $('#dguser').datagrid('reload');
+                    $('#dguser2').datagrid('reload');
+                    msg('Success !', 'Log Berhasil Di Kosongkan');
+                } else {
+                    msg('Error', result.errorMsg);
+                }
+            }, 'json');
+        }
+    });
+}
+//-----------------------------------------end
+//-----------------------------------------start
+function truncateuser() {
+    $.messager.confirm('Attention!', '<strong class="text-danger">Hati-hati Melakukan aksi ini,</strong><br> Apakah Anda Yakin Ingin Mengosongkan User ?', function(r) {
+        if (r) {
+            $.post("/broadcast/truncate", {}, function(result) {
+                if (result.success) {
+                    $('#dguser').datagrid('reload');
+                    $('#dguser2').datagrid('reload');
+                    msg('Success !', 'User Berhasil Di Kosongkan');
+                } else {
+                    msg('Error', result.errorMsg);
+                }
+            }, 'json');
+        }
+    });
+}
+//-----------------------------------------end
+//-----------------------------------------start
+function i_excel() {
+    var url = '/exc-broadcast';
+    var property = document.getElementById('file').files[0];
+    var image_name = property.name;
+    var image_extension = image_name.split('.').pop().toLowerCase();
+    var e = image_extension;
+    if (e !== 'xlsx') {
+        msg('Error','Extensi Harus [ xlsx ].');
+        return;
+    }
+    show_load();
+    var form_data = new FormData();
+    form_data.append("file", property);
+
+    $.ajax({
+        url: url,
+        method: 'POST',
+        data: form_data,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function(data) {
+            if(data.success){
+                msg('Success','import berhasil.');
+                $(`#dguser`).datagrid(`reload`);
+                $(`#dguser2`).datagrid(`reload`);
+                $('#m_excel').modal('hide');
+            }else{                        
+                msg('Error',data.errorMsg);
+            }
+            hid_load(2000);
+        }
+    });
+}
+//-----------------------------------------end
+$('#hp').on('keypress', function(event) {
+    return (((event.which > 47) && (event.which < 58)) || (event.which == 13));
+});
+</script>

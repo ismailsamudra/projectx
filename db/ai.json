@@ -1,0 +1,7 @@
+{
+  "data": {
+    "id": "doc",
+    "auto": "applikasi ini adalah aplikasi berbasis nodejs \ndengan menggunakan library whatsapp web js\nnama aplikasi ini Expert-wabot \ndi buat oleh ismail samudra\nfungsi sebagai whatsapp gateway\ndengan fitur  : \nmanual autoreply,\ngoogle-ai autoreply,\nSkedule (cronjobs),\nbroadcast, dan lain-lain",
+    "doc": "my name is lorem"
+  }
+}

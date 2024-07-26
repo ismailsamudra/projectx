@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta name="viewport" content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no" />  
+        <link rel="icon" type="image/x-icon" href="{{INC.logoP}}" />
+        <title>{{{Title}}}</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <link rel="stylesheet" type="text/css" href="/scripts/bootstrap_x/bootstrap.min.css">
+        <link rel="stylesheet" href="/fontawesome-free-6.2.1-web/css/all.min.css">
+        <link rel="stylesheet" href="/scripts/toastr/toastr.min.css">
+        <link rel="stylesheet" href="/scripts/lte/adminlte.min.css">
+        <link rel="stylesheet" href="/scripts/overlayScrollbars/OverlayScrollbars.min.css">
+        <script src="/scripts/jquery/jquery.min.js"></script>
+        <script src="/scripts/jquery-ui/jquery-ui.min.js"></script>
+        <script src="/scripts/moment/moment.min.js"></script>
+        <style>
+            .sidebar-light-costume .nav-sidebar>.nav-item>.nav-link.active {
+                background-color: {{INC.backroundColor}};
+                color: {{INC.textColor}};
+            }
+            .sidebar-light-costume .nav-sidebar>.nav-item>.nav-link.active:hover {
+                background-color: {{INC.hoverColor}};
+                color: {{INC.textColor}};
+            }
+            .sidebar-light-costume .nav-sidebar.nav-legacy>.nav-item>.nav-link.active {
+                border-color: #1e1e48;
+            }
+            .rol-100 {height: 100px;overflow-y: scroll;}
+            .rol-200 {height: 200px;overflow-y: scroll;}
+            .rol-300 {height: 300px;overflow-y: scroll;}
+            .rol-400 {height: 400px;overflow-y: scroll;}
+            .rol-500 {height: 500px;overflow-y: scroll;}
+            .rol-auto {height: auto;overflow-y: auto;}
+        </style>
+    </head>
+    <body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height" oncontectmenu="return false">
+
+        {{{body}}}
+
+        <script src="/scripts/bootstrap/bootstrap.bundle.min.js"></script>
+        <script src="/scripts/overlayScrollbars/jquery.overlayScrollbars.min.js"></script>
+        <script src="/scripts/toastr/toastr.min.js"></script>
+        <script src="/scripts/lte/adminlte.js"></script>
+        <script src="/scripts/owlcarousel/owl.carousel.min.js"></script>
+
+    </body>
+
+        <div id="autenticate"></div>
+        <div id="load"></div>
+        <script src="/scripts/js_me/function.js"></script>
+        <script src="/scripts/js_me/autenticate.js"></script>
+</html>

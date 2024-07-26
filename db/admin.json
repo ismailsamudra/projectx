@@ -1,0 +1,13 @@
+{
+  "7pss1": {
+    "id": "etK7weDY",
+    "name": "ADMIN",
+    "username": "admin",
+    "password": "$2b$10$voi2qSRQPtewOlGpT66eRevfdYa7cOnqqrfxS1q3QUi5pX8yVXA26",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImV0Szd3ZURZIiwidXNlcm5hbWUiOiJhZG1pbiIsIm5hbWUiOiJBRE1JTiIsImlhdCI6MTcyMjAyMzQ4NywiZXhwIjoxNzIyMTA5ODg3fQ.yHWbT4ejHRhvczW00BGCOnrX739ntvTvfowgngvn6is",
+    "createdAt": "23-07-2024 06:25",
+    "updatedAt": "27-07-2024 03:51",
+    "dataHock": 1,
+    "foto": "/img/admin.png"
+  }
+}

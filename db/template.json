@@ -1,0 +1,60 @@
+{
+  "hupemy": {
+    "id": "2024072680600",
+    "judul": "temp 1pp",
+    "resp": "hi. #NAMA#",
+    "ext": null,
+    "file": null,
+    "dataHock": 1,
+    "class": 1,
+    "status": "true",
+    "createdAt": "26-07-2024 08:06",
+    "updatedAt": "26-07-2024 12:05"
+  },
+  "1vdssq": {
+    "id": "2024072680910",
+    "judul": "temp 1",
+    "resp": "hi. #NAMA#",
+    "ext": "",
+    "file": "",
+    "dataHock": 1,
+    "class": 1,
+    "status": "true",
+    "createdAt": "26-07-2024 08:09",
+    "updatedAt": "26-07-2024 12:05"
+  },
+  "d1yb4": {
+    "id": "2024072680934",
+    "judul": "temp 2",
+    "resp": "            <script>\n                function doSearchCustomer() {\n                    $('#dguser').datagrid('load', {\n                        search: $('#searchCustomer').val()\n                    });\n                }\n            </script>",
+    "ext": "",
+    "file": "",
+    "dataHock": 1,
+    "class": 1,
+    "status": "true",
+    "createdAt": "26-07-2024 08:09"
+  },
+  "25arc2": {
+    "id": "2024072681005",
+    "judul": "panitera pengganti",
+    "resp": "            <script>\n\n                }\n            </script>",
+    "ext": null,
+    "file": null,
+    "dataHock": 1,
+    "class": 1,
+    "status": "true",
+    "createdAt": "26-07-2024 08:10",
+    "updatedAt": "26-07-2024 08:40"
+  },
+  "h9j90c": {
+    "id": "2024072681041",
+    "judul": "PENDAHULUAN",
+    "resp": "            <script>\n                function doSearchCustomer() {\n                    $('#dguser').datagrid('load', {\n                        search: $('#searchCustomer').val()\n                    });\n                }\n            </script>",
+    "ext": "",
+    "file": "",
+    "dataHock": 1,
+    "class": 1,
+    "status": "true",
+    "createdAt": "26-07-2024 08:10"
+  }
+}

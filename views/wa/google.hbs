@@ -1,0 +1,130 @@
+<!-- TOP NAVIGASI START -->
+<div class="btl">
+</div>
+<div class="btr">
+    <a href="javascript:void(0);" onclick="infoExt();" class="btn-sm bt-1 r20" title="Info"><i class="fa fa-info fa-bounce mx-1 fa-sm"></i></a>
+    <a href="" class="btn-sm bt-1 r20" title="Reload"><i class="fa-solid fa-sync fa-sm"></i></a>
+</div>
+<!-- TOP NAVIGASI END -->
+
+<div class="m-4">
+    <div class="m-1">
+
+        <div class="mb-2">
+            <div class="card" style="border-radius: 10px;border-left: 5px solid var(--pa);border-right: 5px solid var(--pa);">
+                <div class="col">
+                    <a href="" class="text-dark"><i class="fab fa-google fa-beat mr-2"></i><strong>Google Ai - Chat-Gpt</strong></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <div class="card p-2" style="border-radius: 10px;border: 2px solid var(--pa);">
+
+                <textarea id="areaChat" class="form-control" style="width:100%;height:300px;font-weight:bold;" readonly></textarea>
+
+                <div class="input-group my-2">
+                    <input type="text" id="meChat" class="form-control" placeholder="Input Pertanyaan ...." aria-label="Input Pertanyaan ...." aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                       <a href="javascript:void(0)" onclick="sendChat()"><span class="input-group-text bg-1" id="basic-addon2"><i class="fa fa-paper-plane mr-2"></i>Send</span></a> 
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <div class="card" style="border-radius: 10px;border-left: 5px solid var(--pa);border-right: 5px solid var(--pa);">
+                <div class="col">
+                    <a href="" class="text-dark"><i class="fa fa-save fa-beat mr-2"></i><strong>Save Text To Google Ai</strong></a>
+                        <a href="javascript:void(0);" id="bt_e_areaDoc" class="float-right" onclick="edit_e(`areaDoc`)"><i class="fa fa-edit fa-bounce text-success" title="Edit"></i></a>
+                        <a href="javascript:void(0);" id="bt_s_areaDoc" class="float-right" onclick="save()"><i class="fa fa-save fa-bounce" title="Save"></i></a>
+                      <script>$('#bt_s_areaDoc').hide();</script>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <div class="card p-2" style="border-radius: 10px;border: 2px solid var(--pa);">
+
+                <textarea id="areaDoc" class="form-control" style="width:100%;height:300px;font-weight:bold;" readonly>{{DOC}}</textarea>
+
+            </div>
+        </div>
+        
+    </div>
+ </div>   
+
+
+<script>
+//-----------------------------------------start
+function sendChat() {
+    if($('#meChat').val()){
+        var msg = $('#meChat').val();
+        var meChat = "Saya : \n" + msg;
+        var areaChat = $('#areaChat').val();
+        var newChat = (areaChat)?areaChat + '\n--------------------\n' + meChat:meChat;
+        $('#areaChat').val(newChat);
+        $('#meChat').val('');
+        $.post("/reply/chatgpt", {msg} ,function(r) {
+            if (r.responseText) {
+                var aiChat = "GOOGLE AI : \n" + r.responseText;
+                var areaChat = $('#areaChat').val();
+                var newChat = (areaChat)?areaChat + '\n--------------------\n' + aiChat:aiChat;
+                $('#areaChat').val(newChat);
+                scrollLogToBottom();
+            } else {
+                msg('Error', r.errorMsg);
+            }
+        }, 'json');
+    }
+scrollLogToBottom();
+}
+//-----------------------------------------end
+function scrollLogToBottom() {
+    logTa = document.getElementById("areaChat")
+    logTa.scrollTop = logTa.scrollHeight;
+}
+$('body').on("keyup", function(event) {
+    if (event.keyCode === 13) {
+        sendChat();
+        return false;
+    }
+});
+//===========================================
+function infoExt(){
+    $.messager.alert('INFO !',`
+        <strong>NB :</strong>
+            Untuk mengaktifkan Google Ai ke whatsapp-bot , anda harus ke menu : <br>
+            APP SETTING -> OPSI WABOT -> Auto Reply = pilih GOOGLE-AI
+    `);
+}
+//===========================================
+//===========================================
+function edit_e(id) {
+    $('#bt_e_'+id).hide();
+    $('#bt_s_'+id).show();
+    $('#'+id).attr('readonly',false);
+}
+//===========================================
+//===========================================
+function close_e(id) {
+    $('#bt_e_'+id).show();
+    $('#bt_s_'+id).hide();
+    $('#'+id).attr('readonly',true);
+}
+//===========================================
+//===========================================
+function save(){
+    var val = $('#areaDoc').val();
+    $.post("/reply/saveaidoc", {val} ,function(r) {
+        if (r.success) {
+            msg('Success !', 'Berhasil di Save');
+            close_e("areaDoc");
+        } else {
+            msg('Error', r.errorMsg);
+        }
+    }, 'json');
+}
+//===========================================
+</script>

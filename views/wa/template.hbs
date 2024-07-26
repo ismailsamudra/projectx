@@ -1,0 +1,306 @@
+<!-- TOP NAVIGASI START -->
+<div class="btl">
+</div>
+<div class="btr">
+   <a href="javascript:void(0);" onclick="$(`#dguser`).datagrid(`reload`);" class="btn-sm bt-1 r20" title="Reload"><i class="fa-solid fa-sync fa-sm"></i></a>
+</div>
+<!-- TOP NAVIGASI END -->
+<div class="m-4">
+    <div class="mb-2">
+        <div class="card" style="border-radius: 10px;border-left: 5px solid var(--pa);border-right: 5px solid var(--pa);">
+            <div class="col">
+                <a href="" class="text-dark"><i class="fab fa-whatsapp fa-flip mr-2"></i><strong>WHATSAPP TEMPLATE</strong></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 mb-2">
+        <center>
+            <table id="dguser" toolbar="#toolbarCustomer" class="easyui-datagrid" singleSelect="true" style="width: 100%;height:356px" fitColumns="true" rowNumbers="true" pagination="true" url="/whatsapp/gettemplate" pageSize="10" pageList="[10,25,50,75,100,125,150,200]">
+                <thead>
+                    <tr>
+                        <th field="id" width="100%" formatter="show_res" sortable="true">TEXT TEMPLATE</th>
+                    </tr>
+                </thead>
+            </table>
+        </center>
+    </div>
+</div>
+
+<div id="toolbarCustomer">
+    <div class="row p-1">
+        <div class="col-md-2">
+           <a href="javascript:void(0);" onclick="add();" class="btn-sm bg-1 r20 float-left" title="ADD"><i class="fa fa-plus"></i> </a>
+           <a href="javascript:void(0);"
+            onclick="$.messager.alert('INFO !',`
+                 Klick kanang jika desktop sentuh tahan jika Mobile pada baris data Untuk menu lain.<br>
+                <hr>
+                 Dobel Klick baris data untuk Edit.
+                `);" 
+           class="btn-sm bg-1 r20 float-left ml-2" title="Info"><i class="fa fa-info mx-1"></i></a>
+        </div>
+        <div class="col-md-4">
+            <div class="mt-1" style="border-radius: 10px;border-left: 5px solid var(--pa);border-right: 5px solid var(--pa);">
+                <div class="col">
+                CODE NAMA USER : #NAMA#
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!---------SEARCH BOX START--------->
+            <input id="searchCustomer" class="easyui-searchbox" data-options="prompt:'Cari Judul..',searcher:doSearchCustomer,
+            inputEvents: $.extend({}, $.fn.searchbox.defaults.inputEvents, {
+                keyup: function(e){
+                    var t = $(e.data.target);
+                    var opts = t.searchbox('options');
+                    t.searchbox('setValue', $(this).val());
+                    opts.searcher.call(t[0],t.searchbox('getValue'),t.searchbox('getName'));
+                }
+            })
+        " style="width:100%;"></input>
+            <script>
+                function doSearchCustomer() {
+                    $('#dguser').datagrid('load', {
+                        search: $('#searchCustomer').val()
+                    });
+                }
+            </script>
+            <!---------SEARCH BOX END----------->
+        </div>
+    </div>
+</div>
+<!-- KLICK KANAN START -->
+<div id="mm" class="easyui-menu">
+    <a href="javascript:void(0)" class="btn-sm form-control mb-1" plain="true" onClick="edit();"><i class="fa fa-edit mr-2"></i>Edit</a>
+    <span id="bthps"></span>
+    <a href="javascript:void(0)" class="btn-sm form-control" plain="true" onClick="destroyuser();"><i class="fa fa-trash mr-2 text-danger"></i> Hapus</a>
+</div>
+<!-- KLICK KANAN END -->
+<!-- Start Modal 1 -->
+<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="head"></div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="fm" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="id" id="id">
+                    <input type="hidden" name="ext" id="ext">
+                    <input type="hidden" name="file" id="file">
+                    <small><strong>Judul</strong></small>
+                    <input type="text" name="judul" id="judul" class="form-control">
+                    <small><strong>Respon Text</strong></small>
+                    <textarea name="resp" id="resp" cols="30" rows="5" class="form-control"></textarea>
+                    <br>
+                    <input type="file" name="fileIn" id="fileIn" onchange="fileOn()">
+                    <a href="javascript:void(0);" onclick="infoExt();" class="badge bg-1 r20 ml-2" title="Info"><i class="fa fa-info mx-1 fa-sm"></i></a>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" onclick="saver();" class="btn btn-outline-dark btn-sm"><i class="fa fa-save mr-2"></i>Save</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End Modal 1-->
+<!-- Start Modal 1 -->
+<div class="modal fade" id="show" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <button type="button" class="close float-right text-white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <center>
+            <div id="iframe"></div>
+        </center>
+    </div>
+</div>
+<!-- End Modal 1-->
+
+<script type="text/javascript">
+//===========================================
+function iframe(src,ext) {
+    if(ext=='pdf'){
+        $('#iframe').html(`<iframe src="data:application/`+ext+`;base64,`+src+`" id="iframe" frameborder="0" width="100%" height="1000px"></iframe>`);
+    }else{
+        $('#iframe').html(`<img src="data:image/`+ext+`;base64,`+src+`" width="80%">`);
+    }
+    $('#show').modal('show');
+}
+//===========================================
+//===========================================
+function infoExt(){
+    $.messager.alert('INFO !',`
+        Extensi di izinkan :<br>
+        png , jpg , jpeg , pdf
+    `);
+}
+//===========================================
+//===========================================
+function saver() {
+    var id = $('#id').val();
+    var ext = ($('#ext').val())?$('#ext').val():null;
+    var file = ($('#file').val())?$('#file').val():null;
+    var judul = document.getElementById("judul").value;
+    if (judul == '') {
+        msg('Error','chat Belum Di isi.');
+        $('#judul').focus();
+        return;
+    }
+    var resp = document.getElementById("resp").value;
+    if (resp == '') {
+        msg('Error','respon text harus Di isi.');
+        $('#resp').focus();
+        return;
+    }
+    $.post("/whatsapp/crudtemplate", {id,judul,resp,ext,file} ,function(r) {
+        if (r.success) {
+                $('#edit').modal('hide');
+                $('#dguser').datagrid('reload');
+                msg('Success !', 'Berhasil di Save');
+        } else {
+            msg('Error', r.errorMsg);
+        }
+    }, 'json');
+}
+//===========================================
+//-----------------------------------------start
+function add() {
+    $('#fm').form('clear');
+    document.getElementById("ext").value = '';
+    document.getElementById("file").value = '';
+    document.getElementById("fileIn").value = '';
+    document.getElementById("head").innerHTML = '<h5 class="modal-title"><i class="fa fa-plus mr-2"></i>Tambah Data</h5>';
+    document.getElementById("id").value = 'insert';
+    $('#edit').modal('show');
+}
+//-----------------------------------------end
+//-----------------------------------------start
+function edit() {
+    var row = $('#dguser').datagrid('getSelected');
+    if (row) {
+        $('#fm').form('load', row);
+        document.getElementById("fileIn").value = '';
+        document.getElementById("head").innerHTML = '<h5 class="modal-title"><i class="fa fa-edit mr-2"></i>Edit Data</h5>';
+        $('#edit').modal('show');
+    }
+}
+//-----------------------------------------end
+//-----------------------------------------start
+function show_res(val, row) {
+    for (var name in row) {
+        ext = (row.ext == 'pdf') ? 'pdf' : 'image';
+        file = (row.file==null || row.file=='')?'':`<div class="col-md-1">
+                                    <a href="javascript:void(0);" class="btn-sm bt-1 r20" onclick="iframe('`+row.file+`','`+row.ext+`')">
+                                      <i class="fa fa-file-`+ext+`" title="File"></i>
+                                    </a> 
+                                  </div>`;
+        return t = `<div class="card col table-responsive my-1 py-1"style="border-radius: 10px;border-left: 5px solid dev(--pa);border-right: 5px solid dev(--pa);">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <small>Judul</small> :
+                            </div>
+                            <div class="col-md-10">
+                                <strong> ` + row.judul + `</strong>  
+                            </div>
+                            ` + file + `
+                        </div>
+                    </div>`;
+                    // <i class="fa fa-file"><i>
+    }
+}
+//-----------------------------------------end
+//===========================================
+function fileOn(){
+  var file = document.getElementById("fileIn").files[0];
+  var reader = new FileReader();
+  reader.onloadend = function() {
+    var re = reader.result;
+    var ext = re.split(";");
+        ext = ext[0].split("/");
+        ext = ext[1];
+    var base64 = re.split(",");
+        base64 = base64[1];
+    $("#ext").val(ext);
+    $("#file").val(base64);
+  }
+  reader.readAsDataURL(file);
+}
+//===========================================
+//-----------------------------------------start
+$(function() {
+    $('#dguser').datagrid({
+        singleSelect: true,
+        onRowContextMenu: function(e, index, row) {
+            if (row.file == '' || row.file == null){
+                $('#bthps').html('')
+            }else{
+                $('#bthps').html(`<a href="javascript:void(0)" class="btn-sm form-control mb-1" plain="true" onClick="hpsfile();"><i class="fa fa-times mr-2 text-danger"></i> Hapus File</a>`);
+            }
+            $(this).datagrid('selectRow', index);
+            e.preventDefault();
+            $('#mm').menu('show', {
+                left: e.pageX,
+                top: e.pageY
+            });
+        },
+        onDblClickRow: function() {
+            edit();
+        },
+        rowStyler: function(index, row) {
+            // if (row.status == 'false') {
+            //     return 'font-weight:bold;background-color: #e60e11;color:#000;';
+            // }
+        }
+    })
+
+})
+//-----------------------------------------end
+//-----------------------------------------start
+function destroyuser() {
+    var row = $('#dguser').datagrid('getSelected');
+    if (row) {
+        $.messager.confirm('Attention!', '<strong class="text-danger">Hati-hati Melakukan aksi ini,</strong><br> Apakah Anda Yakin Ingin Menghapus data ini ?<br>judul : ' + row.judul, function(r) {
+            if (r) {
+                $.post("/whatsapp/deltemplate", {
+                    id: row.id
+                }, function(result) {
+                    if (result.success) {
+                        $('#dguser').datagrid('reload');
+                        msg('Success !', 'Berhasil Di Hapus');
+                    } else {
+                        msg('Error', result.errorMsg);
+                    }
+                }, 'json');
+            }
+        });
+    }
+}
+//-----------------------------------------end
+//-----------------------------------------start
+function hpsfile() {
+    var row = $('#dguser').datagrid('getSelected');
+    if (row) {
+        $.messager.confirm('Attention!', '<strong class="text-danger">Hati-hati Melakukan aksi ini,</strong><br> Apakah Anda Yakin Ingin Menghapus file di data ini ?<br>Chat : ' + row.judul, function(r) {
+            if (r) {
+                $.post("/whatsapp/delfiletemplate", {
+                    id: row.id
+                }, function(result) {
+                    if (result.success) {
+                        $('#dguser').datagrid('reload');
+                        msg('Success !', 'File berhasil Di Hapus');
+                    } else {
+                        msg('Error', result.errorMsg);
+                    }
+                }, 'json');
+            }
+        });
+    }
+}
+//-----------------------------------------end
+</script>
